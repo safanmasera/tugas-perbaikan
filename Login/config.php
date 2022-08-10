@@ -14,8 +14,8 @@ $db = mysqli_connect($config['host'], $config['username'], $config['password'], 
 function registrasi ($data) {
     global $db;
 
-    $username=strtolower(stripslashes($data["username"], FILTER_SANITIZE_STRING));
-    $password=mysqli_real_escape_string($db, $data["password"], FILTER_SANITIZE_STRING);
+    $username=strtolower(stripslashes($data["username"],));
+    $password=mysqli_real_escape_string($db, $data["password"],);
 
 //cek username sudah ada atau belum
 $result = mysqli_query($db, "SELECT username FROM `users` WHERE username = '$username'");
