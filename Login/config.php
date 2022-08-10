@@ -1,0 +1,33 @@
+<?php 
+$url="http://localhost/login/index.php";
+
+// Config database
+$config = [
+    'host' => 'localhost',
+    'username' => 'root',
+    'password' => '',
+    'name' => 'portfolio',
+]; 
+// Global Variabel db untuk query 
+$db = mysqli_connect($config['host'], $config['username'], $config['password'], $config['name']);
+
+function registrasi ($data) {
+    global $db;
+
+    $username=strtolower(stripslashes($data["username"], FILTER_SANITIZE_STRING));
+    $password=mysqli_real_escape_string($db, $data["password"], FILTER_SANITIZE_STRING);
+
+//cek username sudah ada atau belum
+$result = mysqli_query($db, "SELECT username FROM `users` WHERE username = '$username'");
+
+if (mysqli_fetch_assoc($result)) {
+    echo "<script> alert('username sudah terdaftar!');</script>";
+    return false;
+}
+// password hash
+$password = password_hash($password, PASSWORD_DEFAULT);
+ // insert database
+ mysqli_query ($db, "INSERT INTO `users` VALUES('','$username','$password')");
+ return mysqli_affected_rows($db);
+}
+?>
